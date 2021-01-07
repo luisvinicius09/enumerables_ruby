@@ -18,7 +18,7 @@ To get a local copy up and running follow these simple example steps.
 
 
 ### Prerequisites
-Since all the code is written using ruby Ruby Runtime >= 1.9 is required to interpret the code. if you don't have ruby runtime installed on your computer follow the instruction for your specific operating system on the official installation guide
+Since all the code is written using ruby, required to interpret the code. if you don't have ruby runtime installed on your computer follow the instruction for your specific operating system on the official installation guide
 
 ### Usage
 
@@ -57,7 +57,7 @@ After you have downloaded and have a local copy on your computer, open the folde
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](issues/).
+Feel free to check the [issues page](https://github.com/luisvinicius09/enumerables_ruby/issues).
 
 ## Show your support
 
