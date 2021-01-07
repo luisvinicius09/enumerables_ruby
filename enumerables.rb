@@ -9,7 +9,7 @@ module Enumerable
 
   def my_each_with_index
     return to_enum :name unless block_given?
-    
+
     c = 0
     for element in self
       yield element, c
@@ -42,7 +42,7 @@ module Enumerable
         my_each { |x| return false if x }
       end
     elsif args.is_a?(Regexp)
-      my_each { |x| return false if x.match(args)}
+      my_each { |x| return false if x.match(args) }
     elsif args.is_a?(Module)
       my_each { |x| return false if x.is_a?(args) }
     else
@@ -67,9 +67,9 @@ module Enumerable
         new_array.push(x) if yield(x)
       end
     end
-    return new_array
+    new_array
   end
-  
+
   def my_all?(args = nil)
     return to_enum unless block_given? || !args.nil?
 
@@ -134,13 +134,13 @@ module Enumerable
     count = 0
     if block_given?
       my_each do |x|
-        count += 1 if (yield(x))
+        count += 1 if yield(x)
       end
     elsif arg.nil?
       count = size
     else
       my_each do |x|
-        count += 1 if (x == arg)
+        count += 1 if x == arg
       end
     end
     count
