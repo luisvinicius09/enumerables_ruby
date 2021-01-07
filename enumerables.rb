@@ -129,7 +129,7 @@ module Enumerable
     end
     y
   end
-  
+
   def my_count(arg = nil)
     count = 0
     if block_given?
