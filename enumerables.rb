@@ -141,12 +141,12 @@ module Enumerable
     count = 0
     if block_given?
       my_each do |x|
-        if yield(x) count += 1  
+        if (yield(x)) count += 1  
     elsif arg.nil?
       count = size
     else
       my_each do |x|
-        if x == arg count += 1 
+        if (x == arg) count += 1 
     end
     count
   end
