@@ -127,6 +127,19 @@ module Enumerable
   end
 end
 
+  def my_count(arg = nil)
+    count = 0
+    if block_given?
+      my_each do |x|
+        count += 1 if yield(x)end
+    elsif arg.nil?
+      count = size
+    else
+      my_each do |x|
+        count += 1 if x == arg end
+    end
+    count
+  end
 
 # This method is only for tests
 def multiply_els(args)
