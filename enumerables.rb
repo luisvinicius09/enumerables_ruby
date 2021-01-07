@@ -59,12 +59,12 @@ module Enumerable
 
     if is_a?(Hash)
       my_each do |x, y|
-        if yield(x, y) new_hash[x] = y
+        new_hash[x] = y if yield(x, y)
       end
       return new_hash
     else
       my_each do |x|
-        if yield(x) new_array.push(x)
+        new_array.push(x) if yield(x)
       end
     end
     return new_array
@@ -134,18 +134,18 @@ module Enumerable
     count = 0
     if block_given?
       my_each do |x|
-        if (yield(x)) count += 1  
+        count += 1 if (yield(x))
       end
     elsif arg.nil?
       count = size
     else
       my_each do |x|
-        if (x == arg) count += 1
+        count += 1 if (x == arg)
       end
     end
     count
   end
-  
+
 end
 
 
