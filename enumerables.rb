@@ -8,6 +8,7 @@
 module Enumerable
   def my_each
     return to_enum :name unless block_given?
+
     for element in self
       yield element
     end
@@ -26,16 +27,16 @@ module Enumerable
   def my_any?(args = nil)
     if args.nil?
       if block_given?
-        my_each {|x| return true if yield(x)}
+        my_each { |x| return true if yield(x) }
       else
-        my_each {|x| return true if x}
+        my_each { |x| return true if x }
       end
     elsif args.is_a?(Regexp)
-      my_each {|x| return true if x.match(args)}
+      my_each { |x| return true if x.match(args) }
     elsif args.is_a?(Module)
-      my_each {|x| return true if x.is_a?(args)}
+      my_each { |x| return true if x.is_a?(args) }
     else
-      my_each {|x| return true if x == args}
+      my_each { |x| return true if x == args }
     end
     false
   end
@@ -43,39 +44,42 @@ module Enumerable
   def my_none?(args = nil)
     if args.nil?
       if block_given?
-        my_each {|x| return false if yield(x)}
+        my_each { |x| return false if yield(x) }
       else
-        my_each {|x| return false if x}
+        my_each { |x| return false if x }
       end
     elsif args.is_a?(Regexp)
-      my_each {|x| return false if x.match(args)}
+      my_each { |x| return false if x.match(args)}
     elsif args.is_a?(Module)
-      my_each {|x| return false if x.is_a?(args)}
+      my_each { |x| return false if x.is_a?(args) }
     else
-      my_each {|x| return false if val == args}
+      my_each { return false if val == args }
     end
     true
   end
 
   def my_select
-      return to_emum :my_select unless block_given?
-        new_hash = {}
-        new_array = []
-  
-        if is_a? (Hash)
-          my_each do |x, y|
-          new_hash[x] = y if yield(x, y)
+    return to_emum :my_select unless block_given?
+
+      new_hash = {}
+      new_array = []
+
+      if is_a?(Hash)
+        my_each do |x, y|
+          if yield(x, y) new_hash[x] = y 
         end
-      return new_hash
-        else
-          my_each do |x|
-          new_array.push(x) if yield(x) end
-      end
-      return new_array
+    return new_hash
+      else
+        my_each do |x|
+          if yield(x) new_array.push(x)
+        end
+    end
+    return new_array
   end
   
   def my_all?(args = nil)
     return to_enum unless block_given? || !args.nil?
+
     arr = to_a
     if block_given?
       arr.my_each_with_index do |_item, index|
@@ -123,7 +127,7 @@ module Enumerable
     s = arg1 if arg1.is_a?(Symbol)
     if !symbol.nil?
       my_each do |x|
-        y = y ? acc.send(s, x) : val
+        y = y ? y.send(s, x) : val
       end
     else
       my_each do |x|
@@ -132,21 +136,22 @@ module Enumerable
     end
     y
   end
-end
-
+  
   def my_count(arg = nil)
     count = 0
     if block_given?
       my_each do |x|
-        count += 1 if yield(x)end
+        if yield(x) count += 1  
     elsif arg.nil?
       count = size
     else
       my_each do |x|
-        count += 1 if x == arg end
+        if x == arg count += 1 
     end
     count
   end
+end
+
 
 # rubocop:enable Metrics/ModuleLength
 # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
