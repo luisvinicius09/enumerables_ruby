@@ -54,18 +54,18 @@ module Enumerable
   def my_select
     return to_emum :my_select unless block_given?
 
-      new_hash = {}
-      new_array = []
+    new_hash = {}
+    new_array = []
 
-      if is_a?(Hash)
-        my_each do |x, y|
-          if yield(x, y) new_hash[x] = y 
-        end
-    return new_hash
-      else
-        my_each do |x|
-          if yield(x) new_array.push(x)
-        end
+    if is_a?(Hash)
+      my_each do |x, y|
+        if yield(x, y) new_hash[x] = y
+      end
+      return new_hash
+    else
+      my_each do |x|
+        if yield(x) new_array.push(x)
+      end
     end
     return new_array
   end
@@ -135,14 +135,17 @@ module Enumerable
     if block_given?
       my_each do |x|
         if (yield(x)) count += 1  
+      end
     elsif arg.nil?
       count = size
     else
       my_each do |x|
-        if (x == arg) count += 1 
+        if (x == arg) count += 1
+      end
     end
     count
   end
+  
 end
 
 
