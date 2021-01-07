@@ -1,3 +1,4 @@
+rubocop:disable Style/CaseEquality
 module Enumerable
   def my_each
     return to_enum :name unless block_given?
