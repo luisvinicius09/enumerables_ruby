@@ -1,3 +1,12 @@
+# frozen_string_literal: true
+
+# rubocop : disable Metrics/ModuleLength
+# rubocop : disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+# rubocop : disable Metrics/MethodLength
+# rubocop : disable Style/Documentation
+# rubocop : disable Metrics/AbcSize
+
+
 module Enumerable
   def my_each
     return to_enum :name unless block_given?
@@ -126,5 +135,35 @@ module Enumerable
     r_arr
   end
 
+  def my_inject(arg1 = nil, arg2 = nil)
+    y = nil
+    s = nil
+    if arg1.is_a?(Numeric)
+      y = arg1
+      s = arg2 if arg2.is_a?(Symbol)
+    end
+    s = arg1 if arg1.is_a?(Symbol)
+    if !symbol.nil?
+      my_each do |x|
+        y = y ? acc.send(s, x) : val
+      end
+    else
+      my_each do |x|
+        y = y ? yield(y, x) : val
+      end
+    end
+    y
+  end
+end
 
+# rubocop : enable Metrics/ModuleLength
+# rubocop : enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+# rubocop : enable Metrics/MethodLength
+# rubocop : enable Style/Documentation
+# rubocop : enable Metrics/AbcSize
+
+
+# This method is only for tests
+def multiply_els(args)
+  args.my_inject { |acc, val| acc * val }
 end
