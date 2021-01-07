@@ -145,9 +145,7 @@ module Enumerable
     end
     count
   end
-
 end
-
 
 # This method is only for tests
 def multiply_els(args)
