@@ -20,24 +20,24 @@ module Enumerable
     if args.nil?
       if block_given?
         my_each {
-          |x| if yield(x) return true end
+          |x| return true if yield(x)
         }
       else
         my_each {
-          |x| if x return true end
+          |x| return true if x
         }
       end
     elsif args.is_a?(Regexp)
       my_each {
-        |x| if x.match(args) return true end
+        |x| return true if x.match(args)
       }
     elsif args.is_a?(Module)
       my_each {
-        |x| if x.is_a?(args) return true end
+        |x| return true if x.is_a?(args)
       }
     else
       my_each {
-        |x| if x == args return true end
+        |x| return true if x == args
       }
     end
     false
@@ -47,24 +47,24 @@ module Enumerable
     if args.nil?
       if block_given?
         my_each {
-          |x| if yield(x) return false end
+          |x| return false if yield(x)
         }
       else
         my_each {
-          |x| if x return false end
+          |x| return false if x
         }
       end
     elsif args.is_a?(Regexp)
       my_each {
-        |x| if x.match(args) return false end
+        |x| return false if x.match(args)
       }
     elsif args.is_a?(Module)
       my_each {
-        |x| if x.is_a?(args) return false end
+        |x| return false if x.is_a?(args)
       }
     else
       my_each {
-        |x| if val == args return false end
+        |x| return false if val == args
       }
     end
     true
@@ -106,5 +106,26 @@ module Enumerable
     true
   end
 
+  def my_map(args = nil)
+    return to_enum :mapping unless block_given?
+
+    r_arr = []
+    if block_given? && args.is_a?(Proc)
+      my_each do |x|
+        r_arr << args.call(x)
+      end
+    elsif !block_given? && args.is_a?(Proc)
+      my_each do |x|
+        r_arr << args.call(x)
+      end
+    else
+      my_each do |x|
+        r_arr << yield(x)
+      end
+    end
+    r_arr
+  end
 
 end
+
+[1, 2, 3, 4, 5, 6].map
