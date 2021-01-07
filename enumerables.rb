@@ -1,12 +1,3 @@
-frozen_string_literal: true
-
-rubocop  disable Metrics/ModuleLength
-rubocop  disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-rubocop  disable Metrics/MethodLength
-rubocop  disable Style/Documentation
-rubocop  disable Metrics/AbcSize
-
-
 module Enumerable
   def my_each
     return to_enum :name unless block_given?
@@ -135,12 +126,6 @@ module Enumerable
     y
   end
 end
-
-enable Metrics/ModuleLength
- enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
- enable Metrics/MethodLength
- enable Style/Documentation
- enable Metrics/AbcSize
 
 
 # This method is only for tests
