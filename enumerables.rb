@@ -1,3 +1,12 @@
+frozen_string_literal: true
+
+rubocop : disable Metrics/ModuleLength
+rubocop : disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+rubocop : disable Metrics/MethodLength
+rubocop : disable Style/Documentation
+rubocop : disable Metrics/AbcSize
+
+
 module Enumerable
   def my_each
     return to_enum :name unless block_given?
@@ -19,26 +28,16 @@ module Enumerable
   def my_any?(args = nil)
     if args.nil?
       if block_given?
-        my_each {
-          |x| if yield(x) return true end
-        }
+        my_each {|x| return true if yield(x)}
       else
-        my_each {
-          |x| if x return true end
-        }
+        my_each {|x| return true if x}
       end
     elsif args.is_a?(Regexp)
-      my_each {
-        |x| if x.match(args) return true end
-      }
+      my_each {|x| return true if x.match(args)}
     elsif args.is_a?(Module)
-      my_each {
-        |x| if x.is_a?(args) return true end
-      }
+      my_each {|x| return true if x.is_a?(args)}
     else
-      my_each {
-        |x| if x == args return true end
-      }
+      my_each {|x| return true if x == args}
     end
     false
   end
@@ -46,26 +45,16 @@ module Enumerable
   def my_none?(args = nil)
     if args.nil?
       if block_given?
-        my_each {
-          |x| if yield(x) return false end
-        }
+        my_each {|x| return false if yield(x)}
       else
-        my_each {
-          |x| if x return false end
-        }
+        my_each {|x| return false if x}
       end
     elsif args.is_a?(Regexp)
-      my_each {
-        |x| if x.match(args) return false end
-      }
+      my_each {|x| return false if x.match(args)}
     elsif args.is_a?(Module)
-      my_each {
-        |x| if x.is_a?(args) return false end
-      }
+      my_each {|x| return false if x.is_a?(args)}
     else
-      my_each {
-        |x| if val == args return false end
-      }
+      my_each {|x| return false if val == args}
     end
     true
   end
@@ -106,19 +95,55 @@ module Enumerable
     true
   end
 
-  def my_count(arg = nil)
-   count = 0
-    if block_given?
+  def my_map(args = nil)
+    return to_enum :mapping unless block_given?
+
+    r_arr = []
+    if block_given? && args.is_a?(Proc)
       my_each do |x|
-        count += 1 if yield (x)end
-    elsif arg.nil?
-      count = size
+        r_arr << args.call(x)
+      end
+    elsif !block_given? && args.is_a?(Proc)
+      my_each do |x|
+        r_arr << args.call(x)
+      end
     else
       my_each do |x|
-        count += 1 if x == arg end
+        r_arr << yield(x)
+      end
     end
-  return count
+    r_arr
   end
 
+  def my_inject(arg1 = nil, arg2 = nil)
+    y = nil
+    s = nil
+    if arg1.is_a?(Numeric)
+      y = arg1
+      s = arg2 if arg2.is_a?(Symbol)
+    end
+    s = arg1 if arg1.is_a?(Symbol)
+    if !symbol.nil?
+      my_each do |x|
+        y = y ? acc.send(s, x) : val
+      end
+    else
+      my_each do |x|
+        y = y ? yield(y, x) : val
+      end
+    end
+    y
+  end
 end
-print [6 ,4, 3, 2, 98, 53, 3, 3, 7,265,2].my_count(3)
+
+rubocop : enable Metrics/ModuleLength
+rubocop : enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+rubocop : enable Metrics/MethodLength
+rubocop : enable Style/Documentation
+rubocop : enable Metrics/AbcSize
+
+
+# This method is only for tests
+def multiply_els(args)
+  args.my_inject { |acc, val| acc * val }
+end
