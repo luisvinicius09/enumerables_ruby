@@ -1,9 +1,6 @@
-# rubocop:disable Style/CaseEquality
 # rubocop:disable Metrics/ModuleLength
 # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/MethodLength
-# rubocop:disable Style/Documentation
-# rubocop:disable Metrics/AbcSize
 
 module Enumerable
   def my_each
