@@ -1,14 +1,13 @@
 module Enumerable
   def my_each
-    return to_enum :yourname unless block_given?
-
+    return to_enum :name unless block_given?
     for element in self
       yield element
     end
   end
 
   def my_each_with_index
-    return to_enum :yourname unless block_given?
+    return to_enum :name unless block_given?
     
     c = 0
     for element in self
@@ -48,43 +47,64 @@ module Enumerable
     if args.nil?
       if block_given?
         my_each {
-          |x| if yield(x)
-                false
-              end
+          |x| if yield(x) return false end
         }
       else
         my_each {
-          |x| if x
-                false
-              end
+          |x| if x return false end
         }
       end
     elsif args.is_a?(Regexp)
       my_each {
-        |x| if x.match(args)
-              false
-            end
+        |x| if x.match(args) return false end
       }
     elsif args.is_a?(Module)
       my_each {
-        |x| if x.is_a?(args)
-              false
-            end
+        |x| if x.is_a?(args) return false end
       }
     else
       my_each {
-        |x| if val == args
-              false
-            end
+        |x| if val == args return false end
       }
     end
     true
   end
 
+  def my_select
+      return to_emum :my_select unless block_given?
+        new_hash = {}
+        new_array = []
+  
+        if is_a? (Hash)
+          my_each do |x, y|
+          new_hash[x] = y if yield(x, y)
+        end
+      return new_hash
+        else
+          my_each do |x|
+          new_array.push(x) if yield(x) end
+      end
+      return new_array
+  end
+  
+  def my_all?(args = nil)
+    return to_enum unless block_given? || !args.nil?
+    arr = to_a
+    if block_given?
+      arr.my_each_with_index do |_item, index|
+        return false unless yield arr[index]
+      end
+    elsif args.is_a? Class
+      arr.my_each_with_index do |item, _index|
+        return false unless item.class.ancestors.include?(args)
+      end
+    elsif args.is_a? Regexp
+      arr.my_each_with_index do |item, _index|
+        return false unless item.match(args)
+      end
+    end
+    true
+  end
+
+
 end
-
-# [1 ,3, 3, 4, 5, 6, 7].my_each 
-# [1 ,3, 3, 4, 5, 6, 7].my_each_with_index 
-print [1, 2, 3, 4, 5].my_any? {|number| number % 2 == -1}
-
-
