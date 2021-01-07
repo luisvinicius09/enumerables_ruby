@@ -2,9 +2,7 @@
 
 # Ruby Enumerables
 
-> One paragraph statement about the project.
-
-Additional description about the project and its features.
+> This is our custom implemtation of some Ruby's enumerable methods.
 
 ## Built With
 
@@ -15,39 +13,45 @@ Additional description about the project and its features.
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
-
-
 To get a local copy up and running follow these simple example steps.
+* Clone or download this repository to your local workstation.
+
 
 ### Prerequisites
-
-### Setup
-
-### Install
+Since all the code is written using ruby Ruby Runtime >= 1.9 is required to interpret the code. if you don't have ruby runtime installed on your computer follow the instruction for your specific operating system on the official installation guide
 
 ### Usage
 
-### Run tests
+After you have downloaded and have a local copy on your computer, open the folder using your terminal/commandline window and run `enumerables.rb`
 
-### Deployment
+## Contents
+### This code includes 9 methods.
+* `each` method.
+* `each_with_index` method.
+* `select` method.
+* `all?` method.
+* `any?` method.
+* `none?` method.
+* `count` method.
+* `map` method.
+* `inject` method.
 
-
+#### & a method for tests
+###### - `multiply_els` method.
 
 ## Authors
 
 👤 **Author1**
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/linkedinhandle)
+- GitHub: [@luisvinicius09](https://github.com/luisvinicius09)
+- Twitter: [@luisvinicius09](https://twitter.com/luisvinicius09)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/luis-vinicius/)
 
 👤 **Author2**
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/linkedinhandle)
+- GitHub: [@GuNner-pete](https://github.com/GuNner-pete)
+- Twitter: [@MoonlighMr](https://twitter.com/MoonlighMr)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/peter-mo-2924a7183/)
 
 ## 🤝 Contributing
 
@@ -61,10 +65,5 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
 - Inspiration
 - etc
-
-## 📝 License
-
-This project is [MIT](lic.url) licensed.
