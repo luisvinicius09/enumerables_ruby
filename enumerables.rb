@@ -1,7 +1,3 @@
-# rubocop:disable Metrics/ModuleLength
-# rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/MethodLength
-
 module Enumerable
   def my_each
     return to_enum :name unless block_given?
@@ -144,13 +140,6 @@ end
     end
     count
   end
-
-# rubocop:enable Style/CaseEquality
-# rubocop:enable Metrics/ModuleLength
-# rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Style/Documentation
-# rubocop:enable Metrics/AbcSize
 
 # This method is only for tests
 def multiply_els(args)
