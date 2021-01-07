@@ -28,26 +28,16 @@ module Enumerable
   def my_any?(args = nil)
     if args.nil?
       if block_given?
-        my_each {
-          |x| return true if yield(x)
-        }
+        my_each {|x| return true if yield(x)}
       else
-        my_each {
-          |x| return true if x
-        }
+        my_each {|x| return true if x}
       end
     elsif args.is_a?(Regexp)
-      my_each {
-        |x| return true if x.match(args)
-      }
+      my_each {|x| return true if x.match(args)}
     elsif args.is_a?(Module)
-      my_each {
-        |x| return true if x.is_a?(args)
-      }
+      my_each {|x| return true if x.is_a?(args)}
     else
-      my_each {
-        |x| return true if x == args
-      }
+      my_each {|x| return true if x == args}
     end
     false
   end
@@ -55,26 +45,16 @@ module Enumerable
   def my_none?(args = nil)
     if args.nil?
       if block_given?
-        my_each {
-          |x| return false if yield(x)
-        }
+        my_each {|x| return false if yield(x)}
       else
-        my_each {
-          |x| return false if x
-        }
+        my_each {|x| return false if x}
       end
     elsif args.is_a?(Regexp)
-      my_each {
-        |x| return false if x.match(args)
-      }
+      my_each {|x| return false if x.match(args)}
     elsif args.is_a?(Module)
-      my_each {
-        |x| return false if x.is_a?(args)
-      }
+      my_each {|x| return false if x.is_a?(args)}
     else
-      my_each {
-        |x| return false if val == args
-      }
+      my_each {|x| return false if val == args}
     end
     true
   end
