@@ -1,10 +1,10 @@
 frozen_string_literal: true
 
-rubocop : disable Metrics/ModuleLength
-rubocop : disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-rubocop : disable Metrics/MethodLength
-rubocop : disable Style/Documentation
-rubocop : disable Metrics/AbcSize
+rubocop  disable Metrics/ModuleLength
+rubocop  disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+rubocop  disable Metrics/MethodLength
+rubocop  disable Style/Documentation
+rubocop  disable Metrics/AbcSize
 
 
 module Enumerable
@@ -136,11 +136,11 @@ module Enumerable
   end
 end
 
-rubocop : enable Metrics/ModuleLength
-rubocop : enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-rubocop : enable Metrics/MethodLength
-rubocop : enable Style/Documentation
-rubocop : enable Metrics/AbcSize
+enable Metrics/ModuleLength
+ enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+ enable Metrics/MethodLength
+ enable Style/Documentation
+ enable Metrics/AbcSize
 
 
 # This method is only for tests
