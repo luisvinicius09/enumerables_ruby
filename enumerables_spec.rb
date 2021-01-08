@@ -110,24 +110,53 @@ module Enumerable
     r_arr
   end
 
-  def my_inject(arg1 = nil, arg2 = nil)
-    y = nil
-    s = nil
-    if arg1.is_a?(Numeric)
-      y = arg1
-      s = arg2 if arg2.is_a?(Symbol)
+  # def my_inject(arg1 = nil, arg2 = nil)
+  #   y = nil
+  #   s = nil
+  #   if arg1.is_a?(Numeric)
+  #     y = arg1
+  #     s = arg2 if arg2.is_a?(Symbol)
+  #   end
+  #   s = arg1 if arg1.is_a?(Symbol)
+  #   if !symbol.nil?
+  #     my_each do |x|
+  #       y = y ? y.send(s, x) : x
+  #     end
+  #   else
+  #     my_each do |x|
+  #       y = y ? yield(y, x) : x
+  #     end
+  #   end
+  #   y
+  # end
+
+  def my_inject(in1 = nil, in2 = nil)
+    arr = !is_a?(Array) ? to_a.flatten : flatten
+    res = in1.nil? || !in1.is_a?(Numeric) ? 0 : in1
+
+    if in1.is_a?(Symbol)
+      operator = in1
+    elsif in2.is_a?(Symbol)
+      operator = in2
     end
-    s = arg1 if arg1.is_a?(Symbol)
-    if !symbol.nil?
-      my_each do |x|
-        y = y ? y.send(s, x) : val
-      end
-    else
-      my_each do |x|
-        y = y ? yield(y, x) : val
-      end
+
+    if arr.my_all?(String)
+      str = ''
+      arr.my_each { |val| str = yield(str, val) }
+      return str
     end
-    y
+
+    arr.my_each { |num| return arr unless num.is_a?(Numeric) }
+
+    unless operator.nil?
+      arr.my_each { |num| res = res.send(operator, num) }
+      return res
+    end
+
+    return to_enum(:my_inject) unless block_given?
+
+    arr.my_each { |num| res = yield(res, num) }
+    res
   end
 
   def my_count(arg = nil)
@@ -339,7 +368,7 @@ p words.none?(/d/)
 p words.my_none?(/d/)
 p '------none pattern---------'
 p words.none?(5)
-p words.my_none?(5)
+# p words.my_none?(5)
 p '------count range---------'
 p range.count
 p range.my_count

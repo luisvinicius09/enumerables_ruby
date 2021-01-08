@@ -120,11 +120,11 @@ module Enumerable
     s = arg1 if arg1.is_a?(Symbol)
     if !symbol.nil?
       my_each do |x|
-        y = y ? y.send(s, x) : val
+        y = y ? y.send(s, x) : x
       end
     else
       my_each do |x|
-        y = y ? yield(y, x) : val
+        y = y ? yield(y, x) : x
       end
     end
     y
@@ -147,7 +147,7 @@ module Enumerable
   end
 end
 
-print [1, 2, 3, 4, 5, 6].my_none?
+print [1, 2, 3, 4, 5, 6].my_all?
 
 # This method is only for tests
 def multiply_els(args)

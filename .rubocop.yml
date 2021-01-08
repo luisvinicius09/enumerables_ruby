@@ -4,6 +4,7 @@ AllCops:
     - "Guardfile"
     - "Rakefile"
     - "enumerables_spec.rb"
+    - "test.rb"
 
   DisplayCopNames: true
 
