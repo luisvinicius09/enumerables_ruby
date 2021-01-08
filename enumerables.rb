@@ -147,6 +147,8 @@ module Enumerable
   end
 end
 
+print [1, 2, 3, 4, 5, 6].select
+
 # This method is only for tests
 def multiply_els(args)
   args.my_inject { |acc, val| acc * val }
