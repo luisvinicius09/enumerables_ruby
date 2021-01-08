@@ -91,7 +91,6 @@ module Enumerable
     end
     true
   end
-  
 
   def my_map(args = nil)
     return to_enum :mapping unless block_given?
@@ -127,7 +126,7 @@ module Enumerable
       end
       acc
     elsif !arg2.nil? && (arg2.is_a?(Symbol) || arg2.is_a?(String))
-      acc =  arg1
+      acc = arg1
       my_each do |x|
         acc = acc.nil? ? x : acc.send(arg2, x)
       end
@@ -152,7 +151,6 @@ module Enumerable
   end
 end
 
-print [1, true, "hi", []].all? == [1, true, "hi", []].my_all?
 # This method is only for tests
 def multiply_els(args)
   args.my_inject { |acc, val| acc * val }
