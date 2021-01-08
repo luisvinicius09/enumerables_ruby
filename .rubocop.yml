@@ -3,6 +3,7 @@ AllCops:
     - "README.md"
     - "Guardfile"
     - "Rakefile"
+    - "enumerables_spec.rb"
 
   DisplayCopNames: true
 
