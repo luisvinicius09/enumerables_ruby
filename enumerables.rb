@@ -131,6 +131,8 @@ module Enumerable
         acc = acc.nil? ? x : acc.send(arg2, x)
       end
       acc
+    else
+      raise LocalJumpError
     end
   end
 
@@ -150,6 +152,8 @@ module Enumerable
     count
   end
 end
+
+print [1, 2, 3, 4, 5].my_inject
 
 # This method is only for tests
 def multiply_els(args)
