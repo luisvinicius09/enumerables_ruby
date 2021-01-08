@@ -46,13 +46,13 @@ module Enumerable
     elsif args.is_a?(Module)
       my_each { |x| return false if x.is_a?(args) }
     else
-      my_each { return false if val == args }
+      my_each { |x| return false if x == args }
     end
     true
   end
 
   def my_select
-    return to_emum :my_select unless block_given?
+    return to_enum :my_select unless block_given?
 
     new_hash = {}
     new_array = []
@@ -71,13 +71,13 @@ module Enumerable
   end
 
   def my_all?(args = nil)
-    return to_enum unless block_given? || !args.nil?
-
     arr = to_a
     if block_given?
       arr.my_each_with_index do |_item, index|
         return false unless yield arr[index]
       end
+    elsif args.nil?
+      my_each { |x| return false if x.nil? || x == false }
     elsif args.is_a? Class
       arr.my_each_with_index do |item, _index|
         return false unless item.class.ancestors.include?(args)
@@ -86,9 +86,12 @@ module Enumerable
       arr.my_each_with_index do |item, _index|
         return false unless item.match(args)
       end
+    else
+      my_each { |n| return false if n != args }
     end
     true
   end
+  
 
   def my_map(args = nil)
     return to_enum :mapping unless block_given?
@@ -111,23 +114,25 @@ module Enumerable
   end
 
   def my_inject(arg1 = nil, arg2 = nil)
-    y = nil
-    s = nil
-    if arg1.is_a?(Numeric)
-      y = arg1
-      s = arg2 if arg2.is_a?(Symbol)
-    end
-    s = arg1 if arg1.is_a?(Symbol)
-    if !symbol.nil?
+    if block_given?
+      acc = arg1
       my_each do |x|
-        y = y ? y.send(s, x) : x
+        acc = acc.nil? ? x : yield(acc, x)
       end
-    else
+      acc
+    elsif !arg1.nil? && (arg1.is_a?(Symbol) || arg1.is_a?(String))
+      acc = nil
       my_each do |x|
-        y = y ? yield(y, x) : x
+        acc = acc.nil? ? x : acc.send(arg1, x)
       end
+      acc
+    elsif !arg2.nil? && (arg2.is_a?(Symbol) || arg2.is_a?(String))
+      acc =  arg1
+      my_each do |x|
+        acc = acc.nil? ? x : acc.send(arg2, x)
+      end
+      acc
     end
-    y
   end
 
   def my_count(arg = nil)
@@ -147,8 +152,7 @@ module Enumerable
   end
 end
 
-print [1, 2, 3, 4, 5, 6].my_all?
-
+print [1, true, "hi", []].all? == [1, true, "hi", []].my_all?
 # This method is only for tests
 def multiply_els(args)
   args.my_inject { |acc, val| acc * val }
