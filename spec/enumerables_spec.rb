@@ -40,8 +40,8 @@ describe Enumerable do
 
   #my_any? -- array
   describe '#my_any?' do
-    it 'return false'
-      expect(array.my_any?(Numeric)).to eq(array.any?(Numeric))
+    it 'return false'do
+      expect(array.my_any?(String)).to eq(array.any?(String))
     end
   end
 end
